@@ -9,7 +9,6 @@ export default function Dua() {
   const fetchRandomMessage = async () => {
     setLoading(true);
     try {
-      // --- UPDATED TO RENDER URL ---
       const response = await axios.get(
         "https://orpi-chronicle-api-v3.onrender.com/api/messages/random",
       );
@@ -29,86 +28,83 @@ export default function Dua() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#020617] px-8 text-center select-none overflow-hidden relative font-serif">
-      {/* AMBIENT BACKGROUND GLOWS */}
+      {/* Background Glows */}
       <div className="absolute top-[-10%] right-[-5%] w-[50%] h-[50%] bg-[#d4af37]/5 blur-[120px] rounded-full"></div>
       <div className="absolute bottom-[-10%] left-[-5%] w-[50%] h-[50%] bg-blue-600/5 blur-[120px] rounded-full"></div>
 
-      {/* Back Button - Cyber Style */}
-      <Link
-        to="/"
-        className="absolute top-10 left-10 text-white/20 hover:text-[#d4af37] transition-all duration-500 uppercase tracking-[0.3em] text-[10px] z-20"
-      >
-        ← Close the Chronicle
-      </Link>
-
-      {/* THE SCROLL CARD */}
-      <div className="max-w-3xl w-full bg-white/[0.02] backdrop-blur-3xl p-16 md:p-24 border border-white/10 rounded-[50px] shadow-[0_0_100px_rgba(0,0,0,0.6)] relative z-10">
+      <div className="max-w-4xl w-full bg-white/[0.02] backdrop-blur-3xl p-12 md:p-24 border border-white/10 rounded-[50px] shadow-2xl relative z-10">
         {loading ? (
           <div className="flex flex-col items-center gap-6 py-20">
-            <div className="h-2 w-48 bg-white/5 rounded-full overflow-hidden">
-              <div className="h-full bg-[#d4af37] animate-progress w-full shadow-[0_0_15px_#d4af37]"></div>
+            <div className="h-1 w-48 bg-white/5 rounded-full overflow-hidden">
+              <div className="h-full bg-[#d4af37] animate-pulse w-full shadow-[0_0_15px_#d4af37]"></div>
             </div>
-            <p className="text-white/20 italic tracking-[0.2em] text-xs uppercase animate-pulse">
-              Decrypted by AnyMan...
-            </p>
           </div>
         ) : (
           <div className="space-y-16 animate-in fade-in zoom-in duration-1000">
-            {/* Header Section */}
+            {/* 1. Header */}
             <div>
-              <span className="text-[#d4af37] tracking-[0.6em] uppercase text-[10px] font-bold block mb-8 opacity-80">
+              <span className="text-[#d4af37] tracking-[0.6em] uppercase text-[10px] font-bold block mb-6 opacity-80">
                 Data Stream // A Prayer for You
               </span>
               <div className="h-[1px] w-20 bg-gradient-to-r from-transparent via-[#d4af37]/40 to-transparent mx-auto"></div>
             </div>
 
-            {/* Main Message */}
+            {/* 2. Main Message - FORCED WHITE */}
             <div className="px-4">
               <p
                 style={{
                   color: "#ffffff",
-                  textShadow: "0 0 30px rgba(255,255,255,0.2)",
+                  textShadow: "0 0 20px rgba(255,255,255,0.2)",
                 }}
-                className="text-4xl md:text-6xl italic leading-tight font-light"
+                className="text-4xl md:text-6xl italic leading-tight font-light !text-white"
               >
-                "{message?.text || "The scroll is blank..."}"
+                "{message?.text}"
               </p>
             </div>
 
-            {/* Love Line Section */}
-            {message?.loveLine && (
-              <div className="py-4 border-y border-white/5 mx-12">
-                <p className="text-xl md:text-2xl text-white/80 italic font-light tracking-wide">
-                  {message.loveLine}
-                </p>
-              </div>
-            )}
+            {/* 3. Love Line - FORCED WHITE */}
+            <div className="py-10 border-y border-white/5 mx-4 md:mx-12">
+              <p
+                style={{ color: "#ffffff" }}
+                className="text-xl md:text-3xl font-light tracking-wide italic !text-white opacity-100"
+              >
+                {message?.loveLine}
+              </p>
+            </div>
 
-            {/* Reflection */}
-            {message?.reflection && (
-              <div className="pt-4 opacity-40">
-                <p className="text-[#d4af37] text-[11px] tracking-[0.8em] uppercase font-bold">
-                  — {message.reflection} —
-                </p>
-              </div>
-            )}
+            {/* 4. Reflection - Gold Accent */}
+            <div className="pt-4">
+              <p className="text-[#d4af37] text-[11px] tracking-[0.8em] uppercase font-bold opacity-60">
+                — {message?.reflection} —
+              </p>
+            </div>
+
+            {/* 5. Navigation Link - THE BIG GAP */}
+            <div className="pt-24 mt-10">
+              <Link
+                to="/"
+                style={{ color: "rgba(212, 175, 55, 0.5)" }}
+                className="inline-block hover:!text-[#d4af37] transition-all duration-500 uppercase tracking-[0.4em] text-[11px] border-b border-white/10 pb-2 hover:border-[#d4af37]/30"
+              >
+                ← Close the Chronicle
+              </Link>
+            </div>
           </div>
         )}
 
         {/* Refresh Button */}
         <button
           onClick={fetchRandomMessage}
-          className="mt-20 group relative"
-          title="Draw another scroll"
+          className="mt-16 group transition-transform active:scale-90"
         >
-          <div className="text-3xl text-white/10 group-hover:text-[#d4af37] group-hover:rotate-180 transition-all duration-700 ease-in-out cursor-pointer">
+          <div className="text-3xl text-white/10 group-hover:text-[#d4af37] group-hover:rotate-180 transition-all duration-700">
             ↻
           </div>
         </button>
       </div>
 
-      {/* FOOTER */}
-      <div className="absolute bottom-12 opacity-10 flex flex-col items-center gap-4">
+      {/* Footer Branding */}
+      <div className="absolute bottom-8 opacity-10">
         <p className="text-white text-[9px] tracking-[1.5em] uppercase font-mono">
           ORPI.DATA.CHRONICLE // STABLE_REL_2.0
         </p>
