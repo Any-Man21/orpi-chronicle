@@ -9,13 +9,24 @@ const Message = require('./models/Message');
 const app = express();
 
 // --- CLOUD PORT CONFIGURATION ---
-// Render will inject its own port into process.env.PORT
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+// --- CORS CONFIGURATION (CRITICAL FOR VERCEL) ---
+app.use(cors({
+    origin: [
+        "https://orpi-chronicle.vercel.app", // Your live frontend
+        "http://localhost:5173",             // Your local development
+        "http://localhost:3000"
+    ],
+    methods: ["GET", "POST", "OPTIONS"],
+    credentials: true
+}));
+
 app.use(express.json());
 
 // --- ROUTES ---
+
+// Random Message Route
 app.get('/api/messages/random', async (req, res) => {
     try {
         const count = await Message.countDocuments();
@@ -24,9 +35,13 @@ app.get('/api/messages/random', async (req, res) => {
         }
         const random = Math.floor(Math.random() * count);
         const item = await Message.findOne().skip(random);
+        
+        // Add a header as a backup to ensure the browser allows the data
+        res.header("Access-Control-Allow-Origin", "https://orpi-chronicle.vercel.app");
         res.json(item);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error("API Error:", err.message);
+        res.status(500).json({ error: "The ink faded... please try again." });
     }
 });
 
@@ -34,16 +49,19 @@ app.get('/api/messages/random', async (req, res) => {
 app.get('/', (req, res) => res.send('The Chronicle Server is breathing... ⚡'));
 
 // --- DATABASE & SERVER START ---
+// Set strictQuery to suppress deprecation warnings
+mongoose.set('strictQuery', false);
+
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         console.log("✅ SUCCESS: Connected to MongoDB Atlas");
         
-        // Use '0.0.0.0' to ensure the server is accessible externally on Render
+        // Listen on all interfaces (0.0.0.0) for Render
         app.listen(PORT, '0.0.0.0', () => {
             console.log(`🚀 SERVER RUNNING ON PORT ${PORT}`);
         });
     })
     .catch(err => {
         console.error("❌ DB CONNECTION ERROR:", err);
-        process.exit(1); // Stop the server if DB fails
+        process.exit(1); 
     });
