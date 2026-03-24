@@ -9,8 +9,9 @@ export default function Dua() {
   const fetchRandomMessage = async () => {
     setLoading(true);
     try {
+      // Added ?t=${Date.now()} to prevent browser caching
       const response = await axios.get(
-        "https://orpi-chronicle-api-v3.onrender.com/api/messages/random",
+        `https://orpi-chronicle-api-v3.onrender.com/api/messages/random?t=${Date.now()}`,
       );
       if (response.data) {
         setMessage(response.data);
@@ -49,7 +50,7 @@ export default function Dua() {
               <div className="h-[1px] w-20 bg-gradient-to-r from-transparent via-[#d4af37]/40 to-transparent mx-auto"></div>
             </div>
 
-            {/* Main Message - Forced White & Large */}
+            {/* Main Message */}
             <div className="px-4">
               <p
                 style={{
@@ -62,7 +63,7 @@ export default function Dua() {
               </p>
             </div>
 
-            {/* Love Line - Pure White */}
+            {/* Love Line */}
             <div className="py-10 border-y border-white/5 mx-4 md:mx-12">
               <p
                 style={{ color: "#ffffff" }}
@@ -72,14 +73,14 @@ export default function Dua() {
               </p>
             </div>
 
-            {/* Reflection - Gold */}
+            {/* Reflection */}
             <div className="pt-4">
               <p className="text-[#d4af37] text-[11px] tracking-[0.8em] uppercase font-bold opacity-60">
                 — {message?.reflection} —
               </p>
             </div>
 
-            {/* Close Link - Forced Spacing */}
+            {/* Close Link */}
             <div className="pt-24 mt-10">
               <Link
                 to="/"
