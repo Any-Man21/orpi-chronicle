@@ -41,7 +41,7 @@ export default function Dua() {
           </div>
         ) : (
           <div className="space-y-16 animate-in fade-in zoom-in duration-1000">
-            {/* 1. Header */}
+            {/* Header */}
             <div>
               <span className="text-[#d4af37] tracking-[0.6em] uppercase text-[10px] font-bold block mb-6 opacity-80">
                 Data Stream // A Prayer for You
@@ -49,7 +49,7 @@ export default function Dua() {
               <div className="h-[1px] w-20 bg-gradient-to-r from-transparent via-[#d4af37]/40 to-transparent mx-auto"></div>
             </div>
 
-            {/* 2. Main Message - FORCED WHITE */}
+            {/* Main Message - Forced White & Large */}
             <div className="px-4">
               <p
                 style={{
@@ -62,24 +62,24 @@ export default function Dua() {
               </p>
             </div>
 
-            {/* 3. Love Line - FORCED WHITE */}
+            {/* Love Line - Pure White */}
             <div className="py-10 border-y border-white/5 mx-4 md:mx-12">
               <p
                 style={{ color: "#ffffff" }}
-                className="text-xl md:text-3xl font-light tracking-wide italic !text-white opacity-100"
+                className="text-xl md:text-3xl font-light tracking-wide italic !text-white"
               >
                 {message?.loveLine}
               </p>
             </div>
 
-            {/* 4. Reflection - Gold Accent */}
+            {/* Reflection - Gold */}
             <div className="pt-4">
               <p className="text-[#d4af37] text-[11px] tracking-[0.8em] uppercase font-bold opacity-60">
                 — {message?.reflection} —
               </p>
             </div>
 
-            {/* 5. Navigation Link - THE BIG GAP */}
+            {/* Close Link - Forced Spacing */}
             <div className="pt-24 mt-10">
               <Link
                 to="/"
@@ -101,13 +101,6 @@ export default function Dua() {
             ↻
           </div>
         </button>
-      </div>
-
-      {/* Footer Branding */}
-      <div className="absolute bottom-8 opacity-10">
-        <p className="text-white text-[9px] tracking-[1.5em] uppercase font-mono">
-          ORPI.DATA.CHRONICLE // STABLE_REL_2.0
-        </p>
       </div>
     </div>
   );
